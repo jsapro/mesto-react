@@ -1,36 +1,18 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 // import './App.css';
-import './index.css';
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
+import "../index.css";
 
 function App() {
   return (
     <div className="body">
       <div className="page">
-        <header className="header">
-          <img
-            className="header__logo"
-            src="<%=require('./images/header-logo.svg')%>"
-            alt="лого Mesto"
-          />
-        </header>
+        
+        <Header />
 
-        <main>
-          <section className="profile" aria-label="редактор профиля">
-            <button type="button" className="profile__avatar-button">
-              <img className="profile__photo" src="#" alt="Аватар проофиля" />
-            </button>
-            <div className="profile__user-wrapper">
-              <h1 className="profile__name">Жак-Ив Кусто</h1>
-              <button className="profile__edit-button" type="button"></button>
-              <p className="profile__job">Исследователь океана</p>
-            </div>
-            <button className="profile__add-button" type="button"></button>
-          </section>
-
-          <section className="grid-cards" aria-label="фотокарточки">
-            <ul className="grid-cards__container"></ul>
-          </section>
-        </main>
+        <Main />
 
         {/* <!-- Попап редактирования профиля --> */}
         <section className="popup popup_edit-profile">
@@ -201,9 +183,8 @@ function App() {
           </li>
         </template>
 
-        <footer className="footer">
-          <p className="footer__copyright">© 2023 Mesto Russia</p>
-        </footer>
+        <Footer />
+
       </div>
     </div>
   );
