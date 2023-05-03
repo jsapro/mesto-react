@@ -7,7 +7,6 @@ import "../index.css";
 
 function App() {
   return (
-    <div className="body">
       <div className="page">
         
         <Header />
@@ -186,7 +185,6 @@ function App() {
         <Footer />
 
       </div>
-    </div>
   );
 }
 
