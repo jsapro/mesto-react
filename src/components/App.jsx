@@ -1,5 +1,6 @@
 // import logo from "./logo.svg";
 // import './App.css';
+import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -8,17 +9,42 @@ import ImagePopup from "./ImagePopup";
 import "../index.css";
 
 function App() {
+  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] =
+    React.useState(false);
+
+  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
+
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] =
+    React.useState(false);
+
+  const handleEditAvatarClick = () => {
+    setisEditAvatarPopupOpen(true);
+  };
+
+  const handleEditProfileClick = () => {
+    setisEditProfilePopupOpen(true);
+  };
+
+  const handleAddPlaceClick = () => {
+    setisAddPlacePopupOpen(true);
+  };
+
   return (
     <div className="page">
       <Header />
 
-      <Main />
+      <Main
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+      />
 
       {/* «Редактировать профиль»  <!-- Попап редактирования профиля --> */}
       <PopupWithForm
         name="edit-profile"
         title="Редактировать профиль"
         buttonText="Сохранить"
+        isOpen={isEditProfilePopupOpen}
       >
         <input
           id="name-input"
@@ -49,7 +75,7 @@ function App() {
       </PopupWithForm>
 
       {/* «Новое место» <!-- Попап добавления карточки --> */}
-      <PopupWithForm name="add-card" title="Новое место" buttonText="Создать">
+      <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={isAddPlacePopupOpen}>
         <input
           id="place-input"
           className="popup__input popup__input_type_card-name"
@@ -76,8 +102,11 @@ function App() {
       </PopupWithForm>
 
       {/* «Вы уверены?» <!-- Попап удаления карточки --> */}
-      <PopupWithForm name="delete-card" title="Вы уверены?" buttonText="Да">
-      </PopupWithForm>
+      <PopupWithForm
+        name="delete-card"
+        title="Вы уверены?"
+        buttonText="Да"
+      ></PopupWithForm>
 
       {/* <!-- Попап открытия карточки --> */}
       <ImagePopup />
@@ -86,7 +115,7 @@ function App() {
       <PopupWithForm
         name="avatar-update"
         title="Обновить аватар"
-        buttonText="Сохранить"
+        buttonText="Сохранить" isOpen={isEditAvatarPopupOpen}
       >
         <input
           id="avatar-url-input"

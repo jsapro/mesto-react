@@ -1,19 +1,7 @@
 import React from "react";
 
-export default function Main() {
-  const handleEditAvatarClick = () => {
-    document
-      .querySelector(".popup_avatar-update")
-      .classList.add("popup_opened");
-  };
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
 
-  const handleEditProfileClick = () => {
-    document.querySelector(".popup_edit-profile").classList.add("popup_opened");
-  };
-
-  const handleAddPlaceClick = () => {
-    document.querySelector(".popup_add-card").classList.add("popup_opened");
-  };
 
   return (
     <main>
@@ -21,7 +9,7 @@ export default function Main() {
         <button
           type="button"
           className="profile__avatar-button"
-          onClick={handleEditAvatarClick}
+          onClick={onEditAvatar}
         >
           <img className="profile__photo" src="#" alt="Аватар проофиля" />
         </button>
@@ -30,14 +18,14 @@ export default function Main() {
           <button
             className="profile__edit-button"
             type="button"
-            onClick={handleEditProfileClick}
+            onClick={onEditProfile}
           ></button>
           <p className="profile__job">Исследователь океана</p>
         </div>
         <button
           className="profile__add-button"
           type="button"
-          onClick={handleAddPlaceClick}
+          onClick={onAddPlace}
         ></button>
       </section>
 
