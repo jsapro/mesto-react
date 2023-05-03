@@ -1,7 +1,6 @@
 import React from "react";
 
-export default function PopupWithForm({ name, title, children, buttonText, isOpen }) {
-  console.log(isOpen);
+export default function PopupWithForm({ name, title, children, buttonText, isOpen, onClose }) {
   return (
     <section className={`popup popup_${name} ${isOpen ? "popup_opened" : null}`}>
       <div className="popup__container">
@@ -17,7 +16,7 @@ export default function PopupWithForm({ name, title, children, buttonText, isOpe
             {buttonText}
           </button>
         </form>
-        <button className="popup__close-btn" type="button"></button>
+        <button className="popup__close-btn" type="button" onClick={onClose} />
       </div>
     </section>
   );

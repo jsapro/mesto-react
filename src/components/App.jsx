@@ -29,6 +29,12 @@ function App() {
     setisAddPlacePopupOpen(true);
   };
 
+  function closeAllPopups() {
+    setisEditAvatarPopupOpen(false);
+    setisEditProfilePopupOpen(false);
+    setisAddPlacePopupOpen(false);
+  }
+
   return (
     <div className="page">
       <Header />
@@ -44,7 +50,7 @@ function App() {
         name="edit-profile"
         title="Редактировать профиль"
         buttonText="Сохранить"
-        isOpen={isEditProfilePopupOpen}
+        isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}
       >
         <input
           id="name-input"
@@ -75,7 +81,7 @@ function App() {
       </PopupWithForm>
 
       {/* «Новое место» <!-- Попап добавления карточки --> */}
-      <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={isAddPlacePopupOpen}>
+      <PopupWithForm name="add-card" title="Новое место" buttonText="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
         <input
           id="place-input"
           className="popup__input popup__input_type_card-name"
@@ -105,7 +111,7 @@ function App() {
       <PopupWithForm
         name="delete-card"
         title="Вы уверены?"
-        buttonText="Да"
+        buttonText="Да" onClose={closeAllPopups}
       ></PopupWithForm>
 
       {/* <!-- Попап открытия карточки --> */}
@@ -115,7 +121,7 @@ function App() {
       <PopupWithForm
         name="avatar-update"
         title="Обновить аватар"
-        buttonText="Сохранить" isOpen={isEditAvatarPopupOpen}
+        buttonText="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
       >
         <input
           id="avatar-url-input"
