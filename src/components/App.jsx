@@ -16,6 +16,8 @@ function App() {
 
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] =
     React.useState(false);
+  
+  const [selectedCard, setSelectedCard] = React.useState()
 
   const handleEditAvatarClick = () => {
     setisEditAvatarPopupOpen(true);
@@ -141,7 +143,7 @@ function App() {
             <button className="grid-card__delete" type="button"></button>
             <img
               className="grid-card__img"
-              src="https://picsum.photos/seed/picsum/800/700"
+              src="#"
               alt="фотогалерея"
             />
           </div>
