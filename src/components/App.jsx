@@ -4,6 +4,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 import "../index.css";
 
 function App() {
@@ -79,13 +80,7 @@ function App() {
       </PopupWithForm>
 
       {/* <!-- Попап открытия карточки --> */}
-      <figure className="popup popup_open-card">
-        <div className="popup__open-photo">
-          <button className="popup__close-btn" type="button"></button>
-          <img className="popup__img" src="#" alt="фото" />
-          <figcaption className="popup__caption"></figcaption>
-        </div>
-      </figure>
+      <ImagePopup />
 
       {/* «Обновить аватар» <!-- Попап изменения аватара --> */}
       <PopupWithForm
