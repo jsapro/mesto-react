@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./Card";
 import api from "../utils/Api";
 
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
@@ -57,7 +57,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
       <section className="grid-cards" aria-label="фотокарточки">
         <ul className="grid-cards__container">
           {cards.map((card) => (
-            <Card card={card} key={card._id} />
+            <Card card={card} key={card._id} onCardClick={onCardClick} />
           ))}
         </ul>
       </section>
