@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import Card from "./Card";
-import api from "../utils/Api";
+import api from "../utils/api";
 
 export default function Main({
   onEditProfile,
