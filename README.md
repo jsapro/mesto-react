@@ -1,15 +1,20 @@
-# :green_circle:Проект: Mesto React App ([перейти:link:](https://github.com/jsapro/mesto-react))
----
+# :green_circle:Проект: Mesto React App** ([перейти:link:](https://github.com/jsapro/mesto-react))
+
+<img src="./src/images/logo192.png" alt="иконка реакт" height="50" width="50">
+<img src="./src/images/grid-card-heart.svg" alt="иконка сердца" height="50" width="50">
+<img src="./src/images/logo192.png" alt="иконка реакт" height="50" width="50">
+<img src="./src/images/grid-card-heart.svg" alt="иконка сердца" height="50" width="50">
+<img src="./src/images/logo192.png" alt="иконка реакт" height="50" width="50">
+<img src="./src/images/grid-card-heart.svg" alt="иконка сердца" height="50" width="50">
+<img src="./src/images/logo192.png" alt="иконка реакт" height="50" width="50">
+<img src="./src/images/grid-card-heart.svg" alt="иконка сердца" height="50" width="50">
+<img src="./src/images/logo192.png" alt="иконка реакт" height="50" width="50">
+<img src="./src/images/grid-card-heart.svg" alt="иконка сердца" height="50" width="50">
+<img src="./src/images/logo192.png" alt="иконка реакт" height="50" width="50">
+
+***
 ## Практическая работа в рамках [курса Веб‑разработчик](https://practicum.yandex.ru/web/) Яндекс Практикум.
-<br/>
-<img align="right" src="./src/images/grid-card-heart.svg" alt="иконка сердца" height="50" width="50">
-<br/>
-<br/>
-<img align="right" src="./src/images/logo192.png" alt="иконка реакт" height="50" width="50">
-<br/>
-<br/>
-<img align="right" src="./src/images/grid-card-heart.svg" alt="иконка сердца" height="50" width="50">
-<br/>
+
 
 **Пользователи веб-приложение Mesto React App смогут:**
 + :wink:Загружать фотографии с подписями.
