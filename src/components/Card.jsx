@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Card({ card, onCardClick }) {
+export default function Card({ card, onCardClick, ...props }) {
   function handleClick() {
     onCardClick(card);
   }
@@ -8,7 +8,12 @@ export default function Card({ card, onCardClick }) {
     <li className="grid-card">
       <div>
         <button className="grid-card__delete" type="button" />
-        <img className="grid-card__img" src={card.link} alt="фотогалерея" onClick={handleClick} />
+        <img
+          className="grid-card__img"
+          src={card.link}
+          alt="фотогалерея"
+          onClick={handleClick}
+        />
       </div>
       <div className="grid-card__caption">
         <h2 className="grid-card__name">{card.name}</h2>

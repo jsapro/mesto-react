@@ -1,6 +1,6 @@
 // import logo from "./logo.svg";
 // import './App.css';
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -9,15 +9,13 @@ import ImagePopup from "./ImagePopup";
 import "../index.css";
 
 function App() {
-  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] =
-    React.useState(false);
+  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
 
-  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
 
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] =
-    React.useState(false);
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -53,7 +51,7 @@ function App() {
         onCardClick={handleCardClick}
       />
 
-      {/* «Редактировать профиль»  <!-- Попап редактирования профиля --> */}
+      {/*<!-- Попап редактирования профиля --> */}
       <PopupWithForm
         name="edit-profile"
         title="Редактировать профиль"
@@ -89,7 +87,7 @@ function App() {
         <span className="popup__input-error job-input-error"></span>
       </PopupWithForm>
 
-      {/* «Новое место» <!-- Попап добавления карточки --> */}
+      {/* <!-- Попап добавления карточки --> */}
       <PopupWithForm
         name="add-card"
         title="Новое место"
@@ -122,7 +120,7 @@ function App() {
         <span className="popup__input-error url-input-error"></span>
       </PopupWithForm>
 
-      {/* «Вы уверены?» <!-- Попап удаления карточки --> */}
+      {/* <!-- Попап удаления карточки --> */}
       <PopupWithForm
         name="delete-card"
         title="Вы уверены?"
@@ -133,7 +131,7 @@ function App() {
       {/* <!-- Попап открытия карточки --> */}
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
-      {/* «Обновить аватар» <!-- Попап изменения аватара --> */}
+      {/* <!-- Попап изменения аватара --> */}
       <PopupWithForm
         name="avatar-update"
         title="Обновить аватар"
