@@ -1,8 +1,6 @@
 import React from "react";
 
 export default function ImagePopup({ card, onClose }) {
-  console.log(card, "card");
-  console.log(onClose, "onClose");
   return (
     <figure className={`popup popup_open-card ${card && "popup_opened"}`}>
       <div className="popup__open-photo">
