@@ -10,14 +10,14 @@ export default function PopupWithForm({
 }) {
   return (
     <section
-      className={`popup popup_${name} ${isOpen ? "popup_opened" : null}`}
+      className={`popup ${isOpen ? "popup_opened" : null}`}
     >
       <div className="popup__container">
         <h2 className="popup__header">{title}</h2>
         <form className="popup__form" name={name} noValidate>
           {children}
           <button className="popup__submit" type="submit" disabled>
-            {buttonText}
+            {buttonText || "Сохранить"}
           </button>
         </form>
         <button className="popup__close-btn" type="button" onClick={onClose} />
