@@ -8,6 +8,9 @@ export default function Main({
   onAddPlace,
   onEditAvatar,
   onCardClick,
+  onCardLike,
+  onCardDelete,
+  cards,
 }) {
   const { name, about, avatar } = useContext(CurrentUserContext);
 
@@ -16,17 +19,18 @@ export default function Main({
   // const [userName, setUserName] = useState("");
   const [userDescription, setUserDescription] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
-  const [cards, setCards] = useState([]);
+  // const [cards, setCards] = useState([]);
 
-  useEffect(() => {
-    api.getInitialCards()
-      .then(cards => {
-        // console.log(userData);
-        // console.log(cards);
-        setCards(cards);
-      })
-      .catch(err => console.log("ошибка-Promise.all: ", err));
-  }, []);
+  // useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((cards) => {
+  //       // console.log(userData);
+  //       // console.log(cards);
+  //       setCards(cards);
+  //     })
+  //     .catch((err) => console.log("ошибка-Promise.all: ", err));
+  // }, []);
 
   return (
     <main>
@@ -56,8 +60,13 @@ export default function Main({
 
       <section className="grid-cards" aria-label="фотокарточки">
         <ul className="grid-cards__container">
-          {cards.map(card => (
-            <Card card={card} key={card._id} onCardClick={onCardClick} />
+          {cards.map((card) => (
+            <Card
+              card={card}
+              key={card._id}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+            />
           ))}
         </ul>
       </section>

@@ -12,6 +12,11 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 // console.dir(CurrentUserContext.Provider)
 
+// const name = "www";
+// const url = "https://bigpicture.ru/wp-content/uploads/2015/11/nophotoshop13.jpg";
+
+// api.postCard({ description: name, url: url});
+
 function App() {
   const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
 
@@ -26,6 +31,26 @@ function App() {
   useEffect(() => {
     api.getUserInfoFromServer().then((user) => setCurrentUser(user));
   }, []);
+
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cards) => {
+        // console.log(userData);
+        // console.log(cards);
+        setCards(cards);
+      })
+      .catch((err) => console.log("ошибка-Promise.all: ", err));
+  }, []);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api.setLike(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  }
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -60,6 +85,8 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          cards={cards}
         />
 
         {/*<!-- Попап редактирования профиля --> */}
