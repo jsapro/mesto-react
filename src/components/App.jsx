@@ -10,7 +10,7 @@ import "../index.css";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-console.dir(CurrentUserContext.Provider)
+// console.dir(CurrentUserContext.Provider)
 
 function App() {
   const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
