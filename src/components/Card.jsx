@@ -11,7 +11,7 @@ export default function Card({ card, onCardClick, ...props }) {
         <img
           className="grid-card__img"
           src={card.link}
-          alt="фотогалерея"
+          alt={card.name}
           onClick={handleClick}
         />
       </div>
