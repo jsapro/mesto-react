@@ -12,8 +12,8 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 // console.dir(CurrentUserContext.Provider)
 
-// const name = "www";
-// const url = "https://bigpicture.ru/wp-content/uploads/2015/11/nophotoshop13.jpg";
+// const name = "+**++";
+// const url = "https://www.interfax.ru/ftproot/photos/photostory/2020/08/07/week1_700.jpg";
 
 // api.postCard({ description: name, url: url});
 
@@ -48,7 +48,13 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     api.setLike(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+      setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id).then(_ => {
+    setCards(cards => cards.filter((c) => (c._id !== card._id)))
     });
   }
 
@@ -86,6 +92,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
           cards={cards}
         />
 

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function Card({ card, onCardClick, onCardLike, ...props }) {
+export default function Card({ card, onCardClick, onCardLike, onCardDelete, ...props }) {
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn = card.owner._id === currentUser._id;
@@ -18,10 +18,14 @@ export default function Card({ card, onCardClick, onCardLike, ...props }) {
     onCardLike(card);
   }
 
+  function handleDeleteClick() {
+    onCardDelete(card);
+  }
+
   return (
     <li className="grid-card">
       <div>
-        {isOwn && <button className="grid-card__delete" type="button" />}
+        {isOwn && <button onClick={handleDeleteClick} className="grid-card__delete" type="button" />}
         <img
           className="grid-card__img"
           src={card.link}

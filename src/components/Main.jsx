@@ -66,6 +66,7 @@ export default function Main({
               key={card._id}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           ))}
         </ul>
