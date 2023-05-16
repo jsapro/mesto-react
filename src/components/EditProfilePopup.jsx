@@ -7,7 +7,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [description, setDescription] = useState("");
 
   const currentUser = useContext(CurrentUserContext);
-//   console.log(currentUser);
 
   useEffect(() => {
     setName(currentUser.name);
@@ -34,7 +33,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     <PopupWithForm
       name="edit-profile"
       title="Редактировать профиль"
-      // buttonText="Сохранить"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -48,7 +46,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         minLength="2"
         maxLength="40"
         required
-        value={name}
+        value={name ?? ""}
         onChange={handleNameChange}
       />
       {/* <!-- Если написать name="name", то вылетает ошибка --> */}
@@ -64,7 +62,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         minLength="2"
         maxLength="200"
         required
-        value={description}
+        value={description ?? ""}
         onChange={handleDescriptionChange}
       />
 

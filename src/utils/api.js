@@ -54,11 +54,11 @@ class Api {
     });
   }
 
-  setUserAvatar({ avatarUrl }) {
+  setUserAvatar({ avatar }) {
     return this._request(`users/me/avatar`, {
       method: "PATCH",
       body: JSON.stringify({
-        avatar: avatarUrl,
+        avatar: avatar,
       }),
     });
   }
