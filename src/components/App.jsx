@@ -6,13 +6,14 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
 import "../index.css";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 // console.dir(CurrentUserContext.Provider)
 
-// const name = "+**++";
+// const name = "6541ertg";
 // const url = "https://www.interfax.ru/ftproot/photos/photostory/2020/08/07/week1_700.jpg";
 
 // api.postCard({ description: name, url: url});
@@ -53,8 +54,8 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(_ => {
-    setCards(cards => cards.filter((c) => (c._id !== card._id)))
+    api.deleteCard(card._id).then((_) => {
+      setCards((cards) => cards.filter((c) => c._id !== card._id));
     });
   }
 
@@ -97,40 +98,10 @@ function App() {
         />
 
         {/*<!-- Попап редактирования профиля --> */}
-        <PopupWithForm
-          name="edit-profile"
-          title="Редактировать профиль"
-          // buttonText="Сохранить"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <input
-            id="name-input"
-            className="popup__input popup__input_type_name"
-            type="text"
-            placeholder="Имя"
-            name="nickname"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          {/* <!-- Если написать name="name", то вылетает ошибка --> */}
-
-          <span className="popup__input-error name-input-error"></span>
-
-          <input
-            id="job-input"
-            className="popup__input popup__input_type_job"
-            type="text"
-            placeholder="Работа"
-            name="job"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-
-          <span className="popup__input-error job-input-error"></span>
-        </PopupWithForm>
+        />
 
         {/* <!-- Попап добавления карточки --> */}
         <PopupWithForm

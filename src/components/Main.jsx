@@ -17,8 +17,8 @@ export default function Main({
   // console.log("currentUser", useContext(CurrentUserContext))
 
   // const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
+  // const [userDescription, setUserDescription] = useState("");
+  // const [userAvatar, setUserAvatar] = useState("");
   // const [cards, setCards] = useState([]);
 
   // useEffect(() => {
