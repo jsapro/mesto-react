@@ -31,7 +31,7 @@ class Api {
     });
   }
 
-  postCard({ description: name, url: link }) {
+  postCard({ name, link }) {
     return this._request(`cards/`, {
       method: "POST",
       body: JSON.stringify({ name: name, link: link }),

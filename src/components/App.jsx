@@ -8,16 +8,10 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import "../index.css";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-
-// console.dir(CurrentUserContext.Provider)
-
-// const name = "6541ertg";
-// const url = "https://www.interfax.ru/ftproot/photos/photostory/2020/08/07/week1_700.jpg";
-
-// api.postCard({ description: name, url: url});
 
 function App() {
   const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
@@ -30,33 +24,34 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
 
-  useEffect(() => {
-    api.getUserInfoFromServer().then((user) => setCurrentUser(user));
-  }, []);
-
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        // console.log(userData);
-        // console.log(cards);
-        setCards(cards);
+    Promise.all([api.getUserInfoFromServer(), api.getInitialCards()])
+      .then(([userData, initialCards]) => {
+        setCurrentUser(userData);
+        setCards(initialCards);
       })
       .catch((err) => console.log("ошибка-Promise.all: ", err));
   }, []);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.setLike(card._id, !isLiked).then((newCard) => {
-      setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .setLike(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((cards) =>
+          cards.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((e) => console.log(e));
   }
 
   function handleCardDelete(card) {
     api.deleteCard(card._id).then((_) => {
-      setCards((cards) => cards.filter((c) => c._id !== card._id));
+      setCards((cards) => cards.filter((c) => c._id !== card._id)).catch((e) =>
+        console.log(e)
+      );
     });
   }
 
@@ -89,15 +84,34 @@ function App() {
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
       })
-      .catch((e) => console.log(e));
-    closeAllPopups();
+      .catch((e) => console.log(e))
+      .finally(() => {
+        closeAllPopups();
+      });
   }
 
-  function handleUpdateAvatar({avatar}) {
-    api.setUserAvatar({avatar}).then((updatedUser) => {
-      setCurrentUser(updatedUser);
-    });
-    closeAllPopups();
+  function handleUpdateAvatar({ avatar }) {
+    api
+      .setUserAvatar({ avatar })
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => {
+        closeAllPopups();
+      });
+  }
+
+  function handleAddPlaceSubmit({ name, link }) {
+    api
+      .postCard({ name, link })
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => {
+        closeAllPopups();
+      });
   }
 
   return (
@@ -123,37 +137,11 @@ function App() {
         />
 
         {/* <!-- Попап добавления карточки --> */}
-        <PopupWithForm
-          name="add-card"
-          title="Новое место"
-          buttonText="Создать"
-          isOpen={isAddPlacePopupOpen}
+        <AddPlacePopup
+          onAddPlace={handleAddPlaceSubmit}
           onClose={closeAllPopups}
-        >
-          <input
-            id="place-input"
-            className="popup__input popup__input_type_card-name"
-            type="text"
-            placeholder="Название"
-            name="description"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-
-          <span className="popup__input-error place-input-error"></span>
-
-          <input
-            id="url-input"
-            className="popup__input popup__input_type_card-url"
-            type="url"
-            placeholder="Ссылка на картинку"
-            name="url"
-            required
-          />
-
-          <span className="popup__input-error url-input-error"></span>
-        </PopupWithForm>
+          isOpen={isAddPlacePopupOpen}
+        />
 
         {/* <!-- Попап удаления карточки --> */}
         <PopupWithForm
