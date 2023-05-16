@@ -2,12 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function EditProfilePopup({ isOpen, onClose }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser);
+//   console.log(currentUser);
 
   useEffect(() => {
     setName(currentUser.name);
@@ -22,6 +22,14 @@ export default function EditProfilePopup({ isOpen, onClose }) {
     setDescription(e.target.value);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    onUpdateUser({
+      name,
+      about: description,
+    });
+  }
+
   return (
     <PopupWithForm
       name="edit-profile"
@@ -29,6 +37,7 @@ export default function EditProfilePopup({ isOpen, onClose }) {
       // buttonText="Сохранить"
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
       <input
         id="name-input"

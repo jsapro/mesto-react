@@ -38,12 +38,12 @@ class Api {
     });
   }
 
-  setUserInfo({ nickname, job }) {
+  setUserInfo({ name, about }) {
     return this._request(`users/me`, {
       method: "PATCH",
       body: JSON.stringify({
-        name: nickname,
-        about: job,
+        name: name,
+        about: about,
       }),
     });
   }

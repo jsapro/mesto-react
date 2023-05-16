@@ -14,24 +14,6 @@ export default function Main({
 }) {
   const { name, about, avatar } = useContext(CurrentUserContext);
 
-  // console.log("currentUser", useContext(CurrentUserContext))
-
-  // const [userName, setUserName] = useState("");
-  // const [userDescription, setUserDescription] = useState("");
-  // const [userAvatar, setUserAvatar] = useState("");
-  // const [cards, setCards] = useState([]);
-
-  // useEffect(() => {
-  //   api
-  //     .getInitialCards()
-  //     .then((cards) => {
-  //       // console.log(userData);
-  //       // console.log(cards);
-  //       setCards(cards);
-  //     })
-  //     .catch((err) => console.log("ошибка-Promise.all: ", err));
-  // }, []);
-
   return (
     <main>
       <section className="profile" aria-label="редактор профиля">
