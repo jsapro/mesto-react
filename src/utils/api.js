@@ -31,19 +31,19 @@ class Api {
     });
   }
 
-  postCard({ description: name, url: link }) {
+  postCard({ name, link }) {
     return this._request(`cards/`, {
       method: "POST",
       body: JSON.stringify({ name: name, link: link }),
     });
   }
 
-  setUserInfo({ nickname, job }) {
+  setUserInfo({ name, about }) {
     return this._request(`users/me`, {
       method: "PATCH",
       body: JSON.stringify({
-        name: nickname,
-        about: job,
+        name: name,
+        about: about,
       }),
     });
   }
@@ -54,11 +54,11 @@ class Api {
     });
   }
 
-  setUserAvatar({ avatarUrl }) {
+  setUserAvatar({ avatar }) {
     return this._request(`users/me/avatar`, {
       method: "PATCH",
       body: JSON.stringify({
-        avatar: avatarUrl,
+        avatar: avatar,
       }),
     });
   }
