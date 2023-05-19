@@ -26,6 +26,8 @@ function App() {
 
   const [cards, setCards] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     Promise.all([api.getUserInfoFromServer(), api.getInitialCards()])
       .then(([userData, initialCards]) => {
@@ -48,10 +50,12 @@ function App() {
   }, [selectedCard])
 
   const handleCardDelete = React.useCallback((card) => {
+    setIsLoading(true);
     api
       .deleteCard(card._id)
       .then((_) => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
+        setIsLoading(false);
       })
       .catch((e) => console.log(`Ошибка: ${e}`));
   }, [selectedCard]);
@@ -80,31 +84,37 @@ function App() {
   }
 
   function handleupdateUser({ name, about }) {
+    setIsLoading(true);
     api
       .setUserInfo({ name, about })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
         closeAllPopups();
+        setIsLoading(false);
       })
       .catch((e) => console.log(`Ошибка: ${e}`));
   }
 
   function handleUpdateAvatar({ avatar }) {
+    setIsLoading(true);
     api
       .setUserAvatar({ avatar })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
         closeAllPopups();
+        setIsLoading(false);
       })
       .catch((e) => console.log(`Ошибка: ${e}`));
   }
 
   function handleAddPlaceSubmit({ name, link }) {
+    setIsLoading(true);
     api
       .postCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
+        setIsLoading(false);
       })
       .catch((e) => console.log(`Ошибка: ${e}`));
   }
@@ -129,6 +139,7 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleupdateUser}
+          isLoading={isLoading}
         />
 
         {/* <!-- Попап добавления карточки --> */}
@@ -136,13 +147,14 @@ function App() {
           onAddPlace={handleAddPlaceSubmit}
           onClose={closeAllPopups}
           isOpen={isAddPlacePopupOpen}
+          isLoading={isLoading}
         />
 
         {/* <!-- Попап удаления карточки --> */}
         <PopupWithForm
           name="delete-card"
           title="Вы уверены?"
-          buttonText="Да"
+          buttonText={isLoading ? "Удаление..." : "Да"}
           onClose={closeAllPopups}
         ></PopupWithForm>
 
@@ -154,6 +166,7 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
 
         <Footer />
