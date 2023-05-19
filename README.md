@@ -1,4 +1,4 @@
-# :green_circle:Проект: Mesto React App ([перейти:link:](https://github.com/jsapro/mesto-react))
+# :green_circle:Проект: Mesto React App ([перейти:link:](https://jsapro.github.io/mesto-react/))
 ---
 ## Практическая работа в рамках [курса Веб‑разработчик](https://practicum.yandex.ru/web/) Яндекс Практикум.
 <br/>

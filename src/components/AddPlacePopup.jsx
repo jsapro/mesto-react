@@ -5,9 +5,15 @@ export default function AddPlacePopup({ onAddPlace, onClose, isOpen }) {
   const [place, setPlace] = useState("");
   const [url, setUrl] = useState("");
 
+  useEffect(() => {
+    setPlace("");
+    setUrl("");
+  }, [isOpen]);
+
   function handlePlaceChange(e) {
     setPlace(e.target.value);
   }
+
   function handleUrlChange(e) {
     setUrl(e.target.value);
   }
@@ -18,8 +24,6 @@ export default function AddPlacePopup({ onAddPlace, onClose, isOpen }) {
       name: place,
       link: url,
     });
-      setPlace("");
-      setUrl("");
   }
 
   return (

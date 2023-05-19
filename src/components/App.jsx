@@ -32,7 +32,7 @@ function App() {
         setCurrentUser(userData);
         setCards(initialCards);
       })
-      .catch((err) => console.log("ошибка-Promise.all: ", err));
+      .catch((e) => console.log(`ошибка-Promise.all: ${e}`));
   }, []);
 
   function handleCardLike(card) {
@@ -44,15 +44,16 @@ function App() {
           cards.map((c) => (c._id === card._id ? newCard : c))
         );
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(`Ошибка: ${e}`));
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then((_) => {
-      setCards((cards) => cards.filter((c) => c._id !== card._id)).catch((e) =>
-        console.log(e)
-      );
-    });
+    api
+      .deleteCard(card._id)
+      .then((_) => {
+        setCards((cards) => cards.filter((c) => c._id !== card._id));
+      })
+      .catch((e) => console.log(`Ошибка: ${e}`));
   }
 
   const handleCardClick = (card) => {
@@ -83,11 +84,9 @@ function App() {
       .setUserInfo({ name, about })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
         closeAllPopups();
-      });
+      })
+      .catch((e) => console.log(`Ошибка: ${e}`));
   }
 
   function handleUpdateAvatar({ avatar }) {
@@ -95,11 +94,9 @@ function App() {
       .setUserAvatar({ avatar })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
         closeAllPopups();
-      });
+      })
+      .catch((e) => console.log(`Ошибка: ${e}`));
   }
 
   function handleAddPlaceSubmit({ name, link }) {
@@ -107,11 +104,9 @@ function App() {
       .postCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
         closeAllPopups();
-      });
+      })
+      .catch((e) => console.log(`Ошибка: ${e}`));
   }
 
   return (
