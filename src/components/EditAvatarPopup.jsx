@@ -16,12 +16,15 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     });
   }, [currentUser]);
 
+  useEffect(() => {
+    avatarInputRef.current.value = "";
+  }, [isOpen]);
+
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateAvatar({
       avatar: avatarInputRef.current.value,
     });
-    avatarInputRef.current.value = "";
   }
 
   return (
