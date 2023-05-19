@@ -12,21 +12,25 @@ import AddPlacePopup from "./AddPlacePopup";
 import "../index.css";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import PopupWithSubmit from "./PopupWithSubmit";
 
 function App() {
-  const [isEditProfilePopupOpen, setisEditProfilePopupOpen] = useState(false);
-
-  const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
-
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
-
   const [selectedCard, setSelectedCard] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({});
-
   const [cards, setCards] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  const [isSubmitPopupOpen, setIsSubmitPopupOpen] = useState(false);
+
+  const [cardIdToDelete, setCardIdToDelete] = useState("");
 
   useEffect(() => {
     Promise.all([api.getUserInfoFromServer(), api.getInitialCards()])
@@ -37,49 +41,68 @@ function App() {
       .catch((e) => console.log(`ошибка-Promise.all: ${e}`));
   }, []);
 
-  const handleCardLike = React.useCallback((card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api
-      .setLike(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((cards) =>
-          cards.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((e) => console.log(`Ошибка: ${e}`));
-  }, [selectedCard])
+  const handleCardLike = React.useCallback(
+    (card) => {
+      const isLiked = card.likes.some((i) => i._id === currentUser._id);
+      api
+        .setLike(card._id, !isLiked)
+        .then((newCard) => {
+          setCards((cards) =>
+            cards.map((c) => (c._id === card._id ? newCard : c))
+          );
+        })
+        .catch((e) => console.log(`Ошибка: ${e}`));
+    },
+    [selectedCard]
+  );
 
-  const handleCardDelete = React.useCallback((card) => {
-    setIsLoading(true);
-    api
-      .deleteCard(card._id)
-      .then((_) => {
-        setCards((cards) => cards.filter((c) => c._id !== card._id));
-        setIsLoading(false);
-      })
-      .catch((e) => console.log(`Ошибка: ${e}`));
-  }, [selectedCard]);
+  const handleCardDelete = React.useCallback(
+    (card) => {
+      setCardIdToDelete(card._id);
+      setIsSubmitPopupOpen(true);
+    },
+    [selectedCard]
+  );
 
-  const handleCardClick = React.useCallback((card) => {
-    setSelectedCard(card);
-  }, [selectedCard]);
+  const handleCardDeleteApprove = React.useCallback(
+    (cardIdToDelete) => {
+      setIsLoading(true);
+      api
+        .deleteCard(cardIdToDelete)
+        .then((_) => {
+          setCards((cards) => cards.filter((c) => c._id !== cardIdToDelete));
+          setIsLoading(false);
+          setIsSubmitPopupOpen(false);
+        })
+        .catch((e) => console.log(`Ошибка: ${e}`));
+    },
+    [selectedCard]
+  );
+
+  const handleCardClick = React.useCallback(
+    (card) => {
+      setSelectedCard(card);
+    },
+    [selectedCard]
+  );
 
   const handleEditAvatarClick = () => {
-    setisEditAvatarPopupOpen(true);
+    setIsEditAvatarPopupOpen(true);
   };
 
   const handleEditProfileClick = () => {
-    setisEditProfilePopupOpen(true);
+    setIsEditProfilePopupOpen(true);
   };
 
   const handleAddPlaceClick = () => {
-    setisAddPlacePopupOpen(true);
+    setIsAddPlacePopupOpen(true);
   };
 
   function closeAllPopups() {
-    setisEditAvatarPopupOpen(false);
-    setisEditProfilePopupOpen(false);
-    setisAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsSubmitPopupOpen(false);
     setSelectedCard(null);
   }
 
@@ -151,12 +174,13 @@ function App() {
         />
 
         {/* <!-- Попап удаления карточки --> */}
-        <PopupWithForm
-          name="delete-card"
-          title="Вы уверены?"
-          buttonText={isLoading ? "Удаление..." : "Да"}
+        <PopupWithSubmit
           onClose={closeAllPopups}
-        ></PopupWithForm>
+          isLoading={isLoading}
+          isOpen={isSubmitPopupOpen}
+          onSubmit={handleCardDeleteApprove}
+          cardIdToDelete={cardIdToDelete}
+        />
 
         {/* <!-- Попап открытия карточки --> */}
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
