@@ -35,7 +35,7 @@ function App() {
       .catch((e) => console.log(`ошибка-Promise.all: ${e}`));
   }, []);
 
-  function handleCardLike(card) {
+  const handleCardLike = React.useCallback((card) => {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     api
       .setLike(card._id, !isLiked)
@@ -45,20 +45,20 @@ function App() {
         );
       })
       .catch((e) => console.log(`Ошибка: ${e}`));
-  }
+  }, [selectedCard])
 
-  function handleCardDelete(card) {
+  const handleCardDelete = React.useCallback((card) => {
     api
       .deleteCard(card._id)
       .then((_) => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
       })
       .catch((e) => console.log(`Ошибка: ${e}`));
-  }
+  }, [selectedCard]);
 
-  const handleCardClick = (card) => {
+  const handleCardClick = React.useCallback((card) => {
     setSelectedCard(card);
-  };
+  }, [selectedCard]);
 
   const handleEditAvatarClick = () => {
     setisEditAvatarPopupOpen(true);
