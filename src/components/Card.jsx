@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function Card({ card, onCardClick, onCardLike, onCardDelete, ...props }) {
+function Card({ card, onCardClick, onCardLike, onCardDelete, ...props }) {
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn = card.owner._id === currentUser._id;
@@ -15,7 +15,7 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete, ...p
   }
 
   function handleLikeClick() {
-    onCardLike(card);
+    onCardLike(card, isLiked);
   }
 
   function handleDeleteClick() {
@@ -25,7 +25,13 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete, ...p
   return (
     <li className="grid-card">
       <div>
-        {isOwn && <button onClick={handleDeleteClick} className="grid-card__delete" type="button" />}
+        {isOwn && (
+          <button
+            onClick={handleDeleteClick}
+            className="grid-card__delete"
+            type="button"
+          />
+        )}
         <img
           className="grid-card__img"
           src={card.link}
@@ -34,7 +40,9 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete, ...p
         />
       </div>
       <div className="grid-card__caption">
-        <h2 className="grid-card__name">{card.name}</h2>
+        <h2 className="grid-card__name">
+          {Math.random().toFixed(3) * 1000} - {card.name}
+        </h2>
         <div className="grid-card__like-wrapper">
           <button
             onClick={handleLikeClick}
@@ -47,3 +55,5 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete, ...p
     </li>
   );
 }
+
+export default React.memo(Card);

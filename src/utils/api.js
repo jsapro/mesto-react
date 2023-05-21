@@ -74,6 +74,14 @@ class Api {
       method: "DELETE",
     });
   }
+
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return this.deleteLike(id);
+    } else {
+      return this.setLike(id);
+    }
+  }
 }
 
 const api = new Api({
