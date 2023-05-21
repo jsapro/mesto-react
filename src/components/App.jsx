@@ -33,16 +33,19 @@ function App() {
 
   const [cardIdToDelete, setCardIdToDelete] = useState("");
 
+  //
   // Обновление всех карточек:
   // - при клике на любое фото
   // - при смене аватара
   // - при смене юзера
   // Добавить ещё useCallback???
+
   //------------------------------
   // Нет обновления всех карточек:
   // - при лайке
   // - при удалении карточки
   // - при добавлении карточки
+  //
 
   useEffect(() => {
     Promise.all([api.getUserInfoFromServer(), api.getInitialCards()])
@@ -118,7 +121,9 @@ function App() {
     setSelectedCard(null);
   }
 
-  function handleupdateUser({ name, about }) {
+  // вызывает обновление всех карточек
+  // React.useCallback не помогает
+  const handleupdateUser = React.useCallback(({ name, about }) => {
     setIsLoading(true);
     api
       .setUserInfo({ name, about })
@@ -128,7 +133,7 @@ function App() {
         setIsLoading(false);
       })
       .catch((e) => console.log(`Ошибка: ${e}`));
-  }
+  }, [selectedCard])
 
   function handleUpdateAvatar({ avatar }) {
     setIsLoading(true);
