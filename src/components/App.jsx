@@ -18,6 +18,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({});
+
   const [cards, setCards] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +33,17 @@ function App() {
 
   const [cardIdToDelete, setCardIdToDelete] = useState("");
 
+  // Обновление всех карточек:
+  // - при клике на любое фото
+  // - при смене аватара
+  // - при смене юзера
+  // Добавить ещё useCallback???
+  //------------------------------
+  // Нет обновления всех карточек:
+  // - при лайке
+  // - при удалении карточки
+  // - при добавлении карточки
+
   useEffect(() => {
     Promise.all([api.getUserInfoFromServer(), api.getInitialCards()])
       .then(([userData, initialCards]) => {
@@ -42,10 +54,10 @@ function App() {
   }, []);
 
   const handleCardLike = React.useCallback(
-    (card) => {
-      const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    (card, isLiked) => {
+      // const isLiked = card.likes.some((i) => i._id === currentUser._id);
       api
-        .setLike(card._id, !isLiked)
+        .changeLikeCardStatus(card._id, isLiked)
         .then((newCard) => {
           setCards((cards) =>
             cards.map((c) => (c._id === card._id ? newCard : c))

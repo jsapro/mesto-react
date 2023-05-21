@@ -15,7 +15,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete, ...props }) {
   }
 
   function handleLikeClick() {
-    onCardLike(card);
+    onCardLike(card, isLiked);
   }
 
   function handleDeleteClick() {
@@ -25,7 +25,13 @@ function Card({ card, onCardClick, onCardLike, onCardDelete, ...props }) {
   return (
     <li className="grid-card">
       <div>
-        {isOwn && <button onClick={handleDeleteClick} className="grid-card__delete" type="button" />}
+        {isOwn && (
+          <button
+            onClick={handleDeleteClick}
+            className="grid-card__delete"
+            type="button"
+          />
+        )}
         <img
           className="grid-card__img"
           src={card.link}
@@ -34,7 +40,9 @@ function Card({ card, onCardClick, onCardLike, onCardDelete, ...props }) {
         />
       </div>
       <div className="grid-card__caption">
-        <h2 className="grid-card__name">{card.name} - {Math.random().toFixed(3)*1000 }</h2>
+        <h2 className="grid-card__name">
+          {Math.random().toFixed(3) * 1000} - {card.name}
+        </h2>
         <div className="grid-card__like-wrapper">
           <button
             onClick={handleLikeClick}
