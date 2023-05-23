@@ -1,5 +1,3 @@
-// import logo from "./logo.svg";
-// import './App.css';
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
@@ -33,20 +31,6 @@ function App() {
 
   const [cardIdToDelete, setCardIdToDelete] = useState("");
 
-  //
-  // Обновление всех карточек:
-  // - при клике на любое фото
-  // - при смене аватара
-  // - при смене юзера
-  // Добавить ещё useCallback???
-
-  //------------------------------
-  // Нет обновления всех карточек:
-  // - при лайке
-  // - при удалении карточки
-  // - при добавлении карточки
-  //
-
   useEffect(() => {
     Promise.all([api.getUserInfoFromServer(), api.getInitialCards()])
       .then(([userData, initialCards]) => {
@@ -56,9 +40,10 @@ function App() {
       .catch((e) => console.log(`ошибка-Promise.all: ${e}`));
   }, []);
 
+  // если убрать React.useCallback то при лайке рендерятся ВСЕ карточки заново
+  // если React.useCallback оставить то при лайке рендерится только 1 карточка
   const handleCardLike = React.useCallback(
     (card, isLiked) => {
-      // const isLiked = card.likes.some((i) => i._id === currentUser._id);
       api
         .changeLikeCardStatus(card._id, isLiked)
         .then((newCard) => {
@@ -86,10 +71,11 @@ function App() {
         .deleteCard(cardIdToDelete)
         .then((_) => {
           setCards((cards) => cards.filter((c) => c._id !== cardIdToDelete));
-          setIsLoading(false);
+
           setIsSubmitPopupOpen(false);
         })
-        .catch((e) => console.log(`Ошибка: ${e}`));
+        .catch((e) => console.log(`Ошибка: ${e}`))
+        .finally(() => setIsLoading(false));
     },
     [selectedCard]
   );
@@ -121,19 +107,17 @@ function App() {
     setSelectedCard(null);
   }
 
-  // вызывает обновление всех карточек
-  // React.useCallback не помогает
-  const handleupdateUser = React.useCallback(({ name, about }) => {
+  const handleupdateUser = ({ name, about }) => {
     setIsLoading(true);
     api
       .setUserInfo({ name, about })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
         closeAllPopups();
-        setIsLoading(false);
       })
-      .catch((e) => console.log(`Ошибка: ${e}`));
-  }, [selectedCard])
+      .catch((e) => console.log(`Ошибка: ${e}`))
+      .finally(() => setIsLoading(false));
+  };
 
   function handleUpdateAvatar({ avatar }) {
     setIsLoading(true);
@@ -142,9 +126,9 @@ function App() {
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
         closeAllPopups();
-        setIsLoading(false);
       })
-      .catch((e) => console.log(`Ошибка: ${e}`));
+      .catch((e) => console.log(`Ошибка: ${e}`))
+      .finally(() => setIsLoading(false));
   }
 
   function handleAddPlaceSubmit({ name, link }) {
@@ -154,9 +138,9 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
-        setIsLoading(false);
       })
-      .catch((e) => console.log(`Ошибка: ${e}`));
+      .catch((e) => console.log(`Ошибка: ${e}`))
+      .finally(() => setIsLoading(false));
   }
 
   return (
